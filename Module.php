@@ -2,9 +2,7 @@
 
 namespace Octo\GoogleAnalytics;
 
-use Octo;
-
-class Module extends Octo\Module
+class Module extends \Octo\Module
 {
     protected function getName()
     {
