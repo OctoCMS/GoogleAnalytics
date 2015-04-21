@@ -14,6 +14,7 @@ use b8\Database\Query\Criteria;
 use b8\Exception\StoreException;
 use Octo\Store;
 use Octo\GoogleAnalytics\Model\GaTopPage;
+use Octo\GoogleAnalytics\Model\GaTopPageCollection;
 
 /**
  * GaTopPage Base Store
@@ -49,6 +50,13 @@ trait GaTopPageStoreBase
         if (is_null($value)) {
             throw new StoreException('Value passed to ' . __FUNCTION__ . ' cannot be null.');
         }
+        // This is the primary key, so try and get from cache:
+        $cacheResult = $this->getFromCache($value);
+
+        if (!empty($cacheResult)) {
+            return $cacheResult;
+        }
+
 
         $query = new Query($this->getNamespace('GaTopPage').'\Model\GaTopPage', $useConnection);
         $query->select('*')->from('ga_top_page')->limit(1);
@@ -57,7 +65,11 @@ trait GaTopPageStoreBase
 
         try {
             $query->execute();
-            return $query->fetch();
+            $result = $query->fetch();
+
+            $this->setCache($value, $result);
+
+            return $result;
         } catch (PDOException $ex) {
             throw new StoreException('Could not get GaTopPage by Id', 0, $ex);
         }
@@ -81,7 +93,11 @@ trait GaTopPageStoreBase
 
         try {
             $query->execute();
-            return $query->fetch();
+            $result = $query->fetch();
+
+            $this->setCache($value, $result);
+
+            return $result;
         } catch (PDOException $ex) {
             throw new StoreException('Could not get GaTopPage by Uri', 0, $ex);
         }
@@ -134,7 +150,7 @@ trait GaTopPageStoreBase
 
         try {
             $query->execute();
-            return $query->fetchAll();
+            return new GaTopPageCollection($query->fetchAll());
         } catch (PDOException $ex) {
             throw new StoreException('Could not get GaTopPage by PageId', 0, $ex);
         }

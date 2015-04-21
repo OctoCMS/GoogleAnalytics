@@ -14,6 +14,7 @@ use b8\Database\Query\Criteria;
 use b8\Exception\StoreException;
 use Octo\Store;
 use Octo\GoogleAnalytics\Model\GaPageView;
+use Octo\GoogleAnalytics\Model\GaPageViewCollection;
 
 /**
  * GaPageView Base Store
@@ -49,6 +50,13 @@ trait GaPageViewStoreBase
         if (is_null($value)) {
             throw new StoreException('Value passed to ' . __FUNCTION__ . ' cannot be null.');
         }
+        // This is the primary key, so try and get from cache:
+        $cacheResult = $this->getFromCache($value);
+
+        if (!empty($cacheResult)) {
+            return $cacheResult;
+        }
+
 
         $query = new Query($this->getNamespace('GaPageView').'\Model\GaPageView', $useConnection);
         $query->select('*')->from('ga_page_view')->limit(1);
@@ -57,7 +65,11 @@ trait GaPageViewStoreBase
 
         try {
             $query->execute();
-            return $query->fetch();
+            $result = $query->fetch();
+
+            $this->setCache($value, $result);
+
+            return $result;
         } catch (PDOException $ex) {
             throw new StoreException('Could not get GaPageView by Id', 0, $ex);
         }
@@ -110,7 +122,7 @@ trait GaPageViewStoreBase
 
         try {
             $query->execute();
-            return $query->fetchAll();
+            return new GaPageViewCollection($query->fetchAll());
         } catch (PDOException $ex) {
             throw new StoreException('Could not get GaPageView by Metric', 0, $ex);
         }
