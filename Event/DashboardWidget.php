@@ -21,7 +21,7 @@ class DashboardWidget extends Listener
         $assets = Config::getInstance()->get('Octo.AssetManager');
         $assets->addJs('GoogleAnalytics', 'analytics');
 
-        if (Setting::get('analytics', 'ga_email') != '') {
+        if (Setting::get('analytics', 'ga_profile_id') != '') {
             $view = Template::getAdminTemplate('Dashboard/widget', 'GoogleAnalytics');
             $widgets[] = ['order' => 0, 'html' => $view->render()];
         }

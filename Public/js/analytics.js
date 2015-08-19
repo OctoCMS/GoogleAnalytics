@@ -102,8 +102,10 @@ function renderResponsivePie(chart) {
         url: '/' + window.adminUri + '/google-analytics/responsive'
     }).done(function(data) {
         data = JSON.parse(data);
-        for(var i = 0; i < data.length; i++) {
-            var point = { data: data[i].count, color: colors[i] };
+
+        var j = 0;
+        for(var i in data) {
+            var point = { data: data[i].count, color: colors[j++] };
             points.push(point);
 
             $('#responsive-' + i).text(data[i].percentage);

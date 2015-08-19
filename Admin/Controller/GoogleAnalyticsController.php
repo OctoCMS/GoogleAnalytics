@@ -12,17 +12,17 @@ use Octo\GoogleAnalytics\Store\GaPageViewStore;
 class GoogleAnalyticsController extends Controller
 {
     /**
-     * @var \Octo\Analytics\Store\GaTopPageStore
+     * @var \Octo\GoogleAnalytics\Store\GaTopPageStore
      */
     protected $gaTopPageStore;
 
     /**
-     * @var \Octo\Analytics\Store\GaPageViewStore
+     * @var \Octo\GoogleAnalytics\Store\GaPageViewStore
      */
     protected $gaPageViewStore;
 
     /**
-     * @var \Octo\Analytics\Store\GaSummaryViewStore
+     * @var \Octo\GoogleAnalytics\Store\GaSummaryViewStore
      */
     protected $gaSummaryViewStore;
 
@@ -50,7 +50,7 @@ class GoogleAnalyticsController extends Controller
         $total = 0;
 
         foreach ($data as $item) {
-            $return[] = ['percentage' => 0, 'count' => $item->getValue()];
+            $return[$item->getMetric()] = ['percentage' => 0, 'count' => $item->getValue()];
             $total += $item->getValue();
         }
 
