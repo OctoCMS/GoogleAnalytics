@@ -17,6 +17,7 @@
     ],
 
     "require": {
+        "octo/google-identity": "dev-master",
         "google/apiclient": "~1.1"
     },
 
