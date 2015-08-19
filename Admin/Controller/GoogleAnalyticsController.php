@@ -74,7 +74,7 @@ class GoogleAnalyticsController extends Controller
             if (isset($page)) {
                 $pageName = $page->getCurrentVersion()->getShortTitle();
             } else {
-                $pageName = ltrim($item->getUri(), '/');
+                $pageName = $item->getUri();
             }
 
             $data[] = [

@@ -80,6 +80,7 @@ class UpdateGoogleAnalyticsCommand extends Command
         ]);
 
         $store = Store::get('GaTopPage');
+        $pageStore = Store::get('Page');
 
         foreach ($response['rows'] as $row) {
             $record = new GaTopPage();
@@ -87,6 +88,13 @@ class UpdateGoogleAnalyticsCommand extends Command
             $record->setUniquePageviews($row[1]);
             $record->setPageviews($row[2]);
             $record->setUpdated(new DateTime());
+
+            $page = $pageStore->getByUri($row[0]);
+
+            if ($page) {
+                $record->setPageId($page->getId());
+            }
+
             $store->saveByReplace($record);
         }
     }
