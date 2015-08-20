@@ -43,6 +43,9 @@ class UpdateGoogleAnalyticsCommand extends Command
         $this->monthAgo = (new DateTime())->modify('-1 month')->format('Y-m-d');
 
         $this->client = new \Google_Client();
+        $this->client->setClientId(Setting::get('google-identity', 'client_id'));
+        $this->client->setClientSecret(Setting::get('google-identity', 'client_secret'));
+        $this->client->setRedirectUri('postmessage');
         $this->client->setAccessToken(Setting::get('google-identity', 'access_token'));
         $this->service = new \Google_Service_Analytics($this->client);
 
