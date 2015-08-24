@@ -106,7 +106,7 @@ trait GaPageViewStoreBase
      * @param array $options Limits, offsets, etc.
      * @param string $useConnection Connection type to use.
      * @throws StoreException
-     * @return GaPageView[]
+     * @return GaPageViewCollection
      */
     public function getByMetric($value, $options = [], $useConnection = 'read')
     {

@@ -134,7 +134,7 @@ trait GaTopPageStoreBase
      * @param array $options Limits, offsets, etc.
      * @param string $useConnection Connection type to use.
      * @throws StoreException
-     * @return GaTopPage[]
+     * @return GaTopPageCollection
      */
     public function getByPageId($value, $options = [], $useConnection = 'read')
     {
