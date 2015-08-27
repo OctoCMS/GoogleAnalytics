@@ -50,6 +50,13 @@ class GoogleAnalyticsInstallMigration extends AbstractMigration
         }
 
         $table->save();
+
+        $table->changeColumn('date', 'date', ['null' => true, 'default' => null]);
+        $table->changeColumn('updated', 'datetime', ['null' => true, 'default' => null]);
+        $table->changeColumn('value', 'integer', ['null' => true, 'default' => null]);
+        $table->changeColumn('metric', 'string', ['limit' => 250, 'null' => true, 'default' => null]);
+
+        $table->save();
     }
 
     protected function createGaSummaryView()
@@ -76,6 +83,12 @@ class GoogleAnalyticsInstallMigration extends AbstractMigration
         if (!$table->hasIndex(['metric'])) {
             $table->addIndex(['metric'], ['unique' => true]);
         }
+
+        $table->save();
+
+        $table->changeColumn('updated', 'datetime', ['null' => true, 'default' => null]);
+        $table->changeColumn('value', 'integer', ['null' => true, 'default' => null]);
+        $table->changeColumn('metric', 'string', ['limit' => 250, 'null' => true, 'default' => null]);
 
         $table->save();
     }
@@ -112,6 +125,14 @@ class GoogleAnalyticsInstallMigration extends AbstractMigration
         if (!$table->hasIndex(['uri'])) {
             $table->addIndex(['uri'], ['unique' => true]);
         }
+
+        $table->save();
+
+        $table->changeColumn('updated', 'datetime', ['null' => true, 'default' => null]);
+        $table->changeColumn('pageviews', 'integer', ['null' => true, 'default' => null]);
+        $table->changeColumn('unique_pageviews', 'integer', ['null' => true, 'default' => null]);
+        $table->changeColumn('uri', 'string', ['limit' => 250, 'null' => true, 'default' => null]);
+        $table->changeColumn('page_id', 'char', ['limit' => 5, 'null' => true, 'default' => null]);
 
         $table->save();
     }
