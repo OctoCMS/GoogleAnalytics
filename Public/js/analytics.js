@@ -25,7 +25,7 @@ function renderTable(div, metric) {
     var colors = ['green', 'aqua', 'yellow', 'red', 'blue'];
 
     $.ajax({
-        url: '/' + window.adminUri + '/google-analytics/' + metric
+        url: window.adminUri + '/google-analytics/' + metric
     }).done(function(data) {
         data = JSON.parse(data);
 
@@ -46,7 +46,7 @@ function renderChart(chart, metric) {
     var data = [], totalPoints = 30, $UpdatingChartColors = chart.css('color');
 
     $.ajax({
-        url: '/' + window.adminUri + '/google-analytics/metric/' + metric
+        url: window.adminUri + '/google-analytics/metric/' + metric
     }).done(function(data) {
         data = JSON.parse(data);
         var meta = data.shift();
@@ -99,7 +99,7 @@ function renderResponsivePie(chart) {
     var colors = ['rgb(0,192,239)', 'rgb(243,156,18)', 'rgb(0,166,90)'];
 
     $.ajax({
-        url: '/' + window.adminUri + '/google-analytics/responsive'
+        url: window.adminUri + '/google-analytics/responsive'
     }).done(function(data) {
         data = JSON.parse(data);
 
