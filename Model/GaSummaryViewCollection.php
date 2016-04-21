@@ -20,7 +20,7 @@ class GaSummaryViewCollection extends Collection
      * @param GaSummaryView $value
      * @return GaSummaryViewCollection
      */
-    public function add($key, GaSummaryView $value)
+    public function addGaSummaryView($key, GaSummaryView $value)
     {
         return parent::add($key, $value);
     }

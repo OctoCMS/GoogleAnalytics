@@ -20,7 +20,7 @@ class GaPageViewCollection extends Collection
      * @param GaPageView $value
      * @return GaPageViewCollection
      */
-    public function add($key, GaPageView $value)
+    public function addGaPageView($key, GaPageView $value)
     {
         return parent::add($key, $value);
     }

@@ -20,7 +20,7 @@ class GaTopPageCollection extends Collection
      * @param GaTopPage $value
      * @return GaTopPageCollection
      */
-    public function add($key, GaTopPage $value)
+    public function addGaTopPage($key, GaTopPage $value)
     {
         return parent::add($key, $value);
     }
