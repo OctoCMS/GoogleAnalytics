@@ -6,56 +6,65 @@
 
 namespace Octo\GoogleAnalytics\Model\Base;
 
-use b8\Store\Factory;
+use Octo\Model;
+use Octo\Store;
 
 /**
  * GaPageView Base Model
  */
-trait GaPageViewBase
+class GaPageViewBase extends Model
 {
     protected function init()
     {
-        $this->tableName = 'ga_page_view';
-        $this->modelName = 'GaPageView';
+        $this->table = 'ga_page_view';
+        $this->model = 'GaPageView';
 
         // Columns:
+        
         $this->data['id'] = null;
         $this->getters['id'] = 'getId';
         $this->setters['id'] = 'setId';
+        
         $this->data['date'] = null;
         $this->getters['date'] = 'getDate';
         $this->setters['date'] = 'setDate';
+        
         $this->data['updated'] = null;
         $this->getters['updated'] = 'getUpdated';
         $this->setters['updated'] = 'setUpdated';
+        
         $this->data['value'] = null;
         $this->getters['value'] = 'getValue';
         $this->setters['value'] = 'setValue';
+        
         $this->data['metric'] = null;
         $this->getters['metric'] = 'getMetric';
         $this->setters['metric'] = 'setMetric';
-
+        
         // Foreign keys:
+        
     }
+
+    
     /**
-    * Get the value of Id / id.
-    *
-    * @return int
-    */
-    public function getId()
-    {
+     * Get the value of Id / id
+     * @return int
+     */
+
+     public function getId()
+     {
         $rtn = $this->data['id'];
 
         return $rtn;
-    }
-
+     }
+    
     /**
-    * Get the value of Date / date.
-    *
-    * @return \DateTime
-    */
-    public function getDate()
-    {
+     * Get the value of Date / date
+     * @return DateTime
+     */
+
+     public function getDate()
+     {
         $rtn = $this->data['date'];
 
         if (!empty($rtn)) {
@@ -63,15 +72,15 @@ trait GaPageViewBase
         }
 
         return $rtn;
-    }
-
+     }
+    
     /**
-    * Get the value of Updated / updated.
-    *
-    * @return \DateTime
-    */
-    public function getUpdated()
-    {
+     * Get the value of Updated / updated
+     * @return DateTime
+     */
+
+     public function getUpdated()
+     {
         $rtn = $this->data['updated'];
 
         if (!empty($rtn)) {
@@ -79,42 +88,40 @@ trait GaPageViewBase
         }
 
         return $rtn;
-    }
-
+     }
+    
     /**
-    * Get the value of Value / value.
-    *
-    * @return int
-    */
-    public function getValue()
-    {
+     * Get the value of Value / value
+     * @return int
+     */
+
+     public function getValue()
+     {
         $rtn = $this->data['value'];
 
         return $rtn;
-    }
-
+     }
+    
     /**
-    * Get the value of Metric / metric.
-    *
-    * @return string
-    */
-    public function getMetric()
-    {
+     * Get the value of Metric / metric
+     * @return string
+     */
+
+     public function getMetric()
+     {
         $rtn = $this->data['metric'];
 
         return $rtn;
-    }
-
-
+     }
+    
+    
     /**
-    * Set the value of Id / id.
-    *
-    * Must not be null.
-    * @param $value int
-    */
-    public function setId($value)
+     * Set the value of Id / id
+     * @param $value int
+     */
+    public function setId(int $value)
     {
-        $this->validateInt('Id', $value);
+
         $this->validateNotNull('Id', $value);
 
         if ($this->data['id'] === $value) {
@@ -124,15 +131,15 @@ trait GaPageViewBase
         $this->data['id'] = $value;
         $this->setModified('id');
     }
-
+    
     /**
-    * Set the value of Date / date.
-    *
-    * @param $value \DateTime
-    */
+     * Set the value of Date / date
+     * @param $value DateTime
+     */
     public function setDate($value)
     {
         $this->validateDate('Date', $value);
+
 
         if ($this->data['date'] === $value) {
             return;
@@ -141,15 +148,15 @@ trait GaPageViewBase
         $this->data['date'] = $value;
         $this->setModified('date');
     }
-
+    
     /**
-    * Set the value of Updated / updated.
-    *
-    * @param $value \DateTime
-    */
+     * Set the value of Updated / updated
+     * @param $value DateTime
+     */
     public function setUpdated($value)
     {
         $this->validateDate('Updated', $value);
+
 
         if ($this->data['updated'] === $value) {
             return;
@@ -158,15 +165,15 @@ trait GaPageViewBase
         $this->data['updated'] = $value;
         $this->setModified('updated');
     }
-
+    
     /**
-    * Set the value of Value / value.
-    *
-    * @param $value int
-    */
+     * Set the value of Value / value
+     * @param $value int
+     */
     public function setValue($value)
     {
-        $this->validateInt('Value', $value);
+
+
 
         if ($this->data['value'] === $value) {
             return;
@@ -175,15 +182,15 @@ trait GaPageViewBase
         $this->data['value'] = $value;
         $this->setModified('value');
     }
-
+    
     /**
-    * Set the value of Metric / metric.
-    *
-    * @param $value string
-    */
+     * Set the value of Metric / metric
+     * @param $value string
+     */
     public function setMetric($value)
     {
-        $this->validateString('Metric', $value);
+
+
 
         if ($this->data['metric'] === $value) {
             return;
@@ -192,4 +199,5 @@ trait GaPageViewBase
         $this->data['metric'] = $value;
         $this->setModified('metric');
     }
-}
+    
+    }

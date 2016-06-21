@@ -10,9 +10,7 @@ use Octo;
 /**
  * GaTopPage Model
  */
-class GaTopPage extends Octo\Model
+class GaTopPage extends Base\GaTopPageBase
 {
-    use Base\GaTopPageBase;
-
-    // This class has been left blank so that you can modify it - changes in this file will not be overwritten.
+	// This class has been left blank so that you can modify it - changes in this file will not be overwritten.
 }

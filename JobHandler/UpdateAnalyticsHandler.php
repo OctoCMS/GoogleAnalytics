@@ -62,7 +62,7 @@ class UpdateAnalyticsHandler extends Handler
             $record->setValue($row[1]); // e.g. 501
             $record->setUpdated(new DateTime());
 
-            $store->saveByReplace($record);
+            $store->replace($record);
         }
     }
 
@@ -110,28 +110,28 @@ class UpdateAnalyticsHandler extends Handler
             $record->setDate(new \DateTime($row[0]));
             $record->setMetric('visits');
             $record->setValue($row[1]);
-            $store->saveByReplace($record);
+            $store->replace($record);
 
             $record = new GaPageView();
             $record->setUpdated(new DateTime());
             $record->setDate(new \DateTime($row[0]));
             $record->setMetric('visitors');
             $record->setValue($row[2]);
-            $store->saveByReplace($record);
+            $store->replace($record);
 
             $record = new GaPageView();
             $record->setUpdated(new DateTime());
             $record->setDate(new \DateTime($row[0]));
             $record->setMetric('pageviews');
             $record->setValue($row[3]);
-            $store->saveByReplace($record);
+            $store->replace($record);
 
             $record = new GaPageView();
             $record->setUpdated(new DateTime());
             $record->setDate(new \DateTime($row[0]));
             $record->setMetric('uniquePageviews');
             $record->setValue($row[4]);
-            $store->saveByReplace($record);
+            $store->replace($record);
         }
     }
 }

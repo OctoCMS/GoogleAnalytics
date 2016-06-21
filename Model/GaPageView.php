@@ -10,9 +10,7 @@ use Octo;
 /**
  * GaPageView Model
  */
-class GaPageView extends Octo\Model
+class GaPageView extends Base\GaPageViewBase
 {
-    use Base\GaPageViewBase;
-
-    // This class has been left blank so that you can modify it - changes in this file will not be overwritten.
+	// This class has been left blank so that you can modify it - changes in this file will not be overwritten.
 }

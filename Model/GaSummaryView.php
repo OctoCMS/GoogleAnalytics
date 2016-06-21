@@ -10,9 +10,7 @@ use Octo;
 /**
  * GaSummaryView Model
  */
-class GaSummaryView extends Octo\Model
+class GaSummaryView extends Base\GaSummaryViewBase
 {
-    use Base\GaSummaryViewBase;
-
-    // This class has been left blank so that you can modify it - changes in this file will not be overwritten.
+	// This class has been left blank so that you can modify it - changes in this file will not be overwritten.
 }

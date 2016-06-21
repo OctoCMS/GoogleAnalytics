@@ -2,16 +2,11 @@
 
 /**
  * GaTopPage base store for table: ga_top_page
+
  */
 
 namespace Octo\GoogleAnalytics\Store\Base;
 
-use PDOException;
-use b8\Cache;
-use b8\Database;
-use b8\Database\Query;
-use b8\Database\Query\Criteria;
-use b8\Exception\StoreException;
 use Octo\Store;
 use Octo\GoogleAnalytics\Model\GaTopPage;
 use Octo\GoogleAnalytics\Model\GaTopPageCollection;
@@ -19,141 +14,67 @@ use Octo\GoogleAnalytics\Model\GaTopPageCollection;
 /**
  * GaTopPage Base Store
  */
-trait GaTopPageStoreBase
+class GaTopPageStoreBase extends Store
 {
-    protected function init()
-    {
-        $this->tableName = 'ga_top_page';
-        $this->modelName = '\Octo\GoogleAnalytics\Model\GaTopPage';
-        $this->primaryKey = 'id';
-    }
+    protected $table = 'ga_top_page';
+    protected $model = 'Octo\GoogleAnalytics\Model\GaTopPage';
+    protected $key = 'id';
+
     /**
     * @param $value
-    * @param string $useConnection Connection type to use.
-    * @throws StoreException
-    * @return GaTopPage
+    * @return GaTopPage|null
     */
-    public function getByPrimaryKey($value, $useConnection = 'read')
+    public function getByPrimaryKey($value)
     {
-        return $this->getById($value, $useConnection);
+        return $this->getById($value);
     }
 
 
     /**
-    * @param $value
-    * @param string $useConnection Connection type to use.
-    * @throws StoreException
-    * @return GaTopPage
-    */
-    public function getById($value, $useConnection = 'read')
+     * Get a GaTopPage object by Id.
+     * @param $value
+     * @return GaTopPage|null
+     */
+    public function getById(int $value)
     {
-        if (is_null($value)) {
-            throw new StoreException('Value passed to ' . __FUNCTION__ . ' cannot be null.');
-        }
         // This is the primary key, so try and get from cache:
-        $cacheResult = $this->getFromCache($value);
+        $cacheResult = $this->cacheGet($value);
 
         if (!empty($cacheResult)) {
             return $cacheResult;
         }
 
+        $rtn = $this->where('id', $value)->first();
+        $this->cacheSet($value, $rtn);
 
-        $query = new Query($this->getNamespace('GaTopPage').'\Model\GaTopPage', $useConnection);
-        $query->select('*')->from('ga_top_page')->limit(1);
-        $query->where('`id` = :id');
-        $query->bind(':id', $value);
-
-        try {
-            $query->execute();
-            $result = $query->fetch();
-
-            $this->setCache($value, $result);
-
-            return $result;
-        } catch (PDOException $ex) {
-            throw new StoreException('Could not get GaTopPage by Id', 0, $ex);
-        }
-    }
-    /**
-    * @param $value
-    * @param string $useConnection Connection type to use.
-    * @throws StoreException
-    * @return GaTopPage
-    */
-    public function getByUri($value, $useConnection = 'read')
-    {
-        if (is_null($value)) {
-            throw new StoreException('Value passed to ' . __FUNCTION__ . ' cannot be null.');
-        }
-
-        $query = new Query($this->getNamespace('GaTopPage').'\Model\GaTopPage', $useConnection);
-        $query->select('*')->from('ga_top_page')->limit(1);
-        $query->where('`uri` = :uri');
-        $query->bind(':uri', $value);
-
-        try {
-            $query->execute();
-            $result = $query->fetch();
-
-            $this->setCache($value, $result);
-
-            return $result;
-        } catch (PDOException $ex) {
-            throw new StoreException('Could not get GaTopPage by Uri', 0, $ex);
-        }
+        return $rtn;
     }
 
     /**
+     * Get a GaTopPage object by Uri.
      * @param $value
-     * @param array $options Offsets, limits, etc.
-     * @param string $useConnection Connection type to use.
-     * @throws StoreException
+     * @return GaTopPage|null
+     */
+    public function getByUri(string $value)
+    {
+        return $this->where('uri', $value)->first();
+    }
+
+    /**
+     * Get all GaTopPage objects by PageId.
+     * @return \Octo\GoogleAnalytics\Model\GaTopPageCollection
+     */
+    public function getByPageId($value, $limit = null)
+    {
+        return $this->where('page_id', $value)->get($limit);
+    }
+
+    /**
+     * Gets the total number of GaTopPage by PageId value.
      * @return int
      */
-    public function getTotalForPageId($value, $options = [], $useConnection = 'read')
+    public function getTotalByPageId($value) : int
     {
-        if (is_null($value)) {
-            throw new StoreException('Value passed to ' . __FUNCTION__ . ' cannot be null.');
-        }
-
-        $query = new Query($this->getNamespace('GaTopPage').'\Model\GaTopPage', $useConnection);
-        $query->from('ga_top_page')->where('`page_id` = :page_id');
-        $query->bind(':page_id', $value);
-
-        $this->handleQueryOptions($query, $options);
-
-        try {
-            return $query->getCount();
-        } catch (PDOException $ex) {
-            throw new StoreException('Could not get count of GaTopPage by PageId', 0, $ex);
-        }
-    }
-
-    /**
-     * @param $value
-     * @param array $options Limits, offsets, etc.
-     * @param string $useConnection Connection type to use.
-     * @throws StoreException
-     * @return GaTopPageCollection
-     */
-    public function getByPageId($value, $options = [], $useConnection = 'read')
-    {
-        if (is_null($value)) {
-            throw new StoreException('Value passed to ' . __FUNCTION__ . ' cannot be null.');
-        }
-
-        $query = new Query($this->getNamespace('GaTopPage').'\Model\GaTopPage', $useConnection);
-        $query->from('ga_top_page')->where('`page_id` = :page_id');
-        $query->bind(':page_id', $value);
-
-        $this->handleQueryOptions($query, $options);
-
-        try {
-            $query->execute();
-            return new GaTopPageCollection($query->fetchAll());
-        } catch (PDOException $ex) {
-            throw new StoreException('Could not get GaTopPage by PageId', 0, $ex);
-        }
-
+        return $this->where('page_id', $value)->count();
     }
 }

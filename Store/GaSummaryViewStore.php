@@ -14,11 +14,9 @@ use Octo\GoogleAnalytics\Model\GaSummaryView;
  * GaSummaryView Store
  * @uses Octo\GoogleAnalytics\Store\Base\GaSummaryViewStoreBase
  */
-class GaSummaryViewStore extends Octo\Store
+class GaSummaryViewStore extends Base\GaSummaryViewStoreBase
 {
-    use Base\GaSummaryViewStoreBase;
-
-    public function getResponsiveMetrics()
+	public function getResponsiveMetrics()
     {
         $query = "SELECT * FROM ga_summary_view
         WHERE metric IN('desktop', 'tablet', 'mobile')";

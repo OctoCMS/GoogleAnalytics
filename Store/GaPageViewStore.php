@@ -15,11 +15,9 @@ use Octo\GoogleAnalytics\Model\GaPageView;
  * GaPageView Store
  * @uses Octo\GoogleAnalytics\Store\Base\GaPageViewStoreBase
  */
-class GaPageViewStore extends Octo\Store
+class GaPageViewStore extends Base\GaPageViewStoreBase
 {
-    use Base\GaPageViewStoreBase;
-
-    /**
+	/**
      * Get the results for the given metric between the given dates
      *
      * @param $metric
