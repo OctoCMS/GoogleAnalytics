@@ -1,27 +1,55 @@
 $(document).ready(function(e) {
-    if($('#pageviews-chart').length > 0) {;
-        renderChart($('#pageviews-chart'), 'pageviews');
-        renderTable($('#pageviews-list'), 'top-pages');
-        $('#pageviews').show();
 
-        renderChart($('#uniquePageviews-chart'), 'uniquePageviews');
-        renderTable($('#uniquePageviews-list'), 'top-unique-pages');
+    var self = $('#ga-overview');
 
-        renderChart($('#visitors-chart'), 'visitors');
-        renderResponsivePie($('#responsive-chart'));
+    renderTable($('#pageviews-list'), 'top-pages', function () {
+        renderResponsivePie($('#visitor-breakdown'), function () {
+            self.addClass('rendered').find('.overlay').remove();
+        });
+    });
 
-        if($('ul.nav-tabs#analytics').length > 0) {
-            $('ul.nav-tabs#analytics li a').on('click', function(e) {
-                e.preventDefault();
-                var id = $(this).attr('href').replace('#', '');
-                $('#analytics_container div.box-body').hide();
-                $('#' + id).fadeIn('slow');
-            });
+    $('#ga-tab-pageviews').on('shown.bs.tab', function () {
+        console.log('Showing pageviews');
+
+        var self = $('#ga-pageviews');
+
+        if (self.hasClass('rendered')) {
+            return;
         }
-    }
+
+        renderChart($('#pageviews-chart'), 'pageviews', function () {
+            self.addClass('rendered').find('.overlay').remove();
+        });
+    });
+
+    $('#ga-tab-uniques').on('shown.bs.tab', function () {
+        console.log('Showing uniques');
+        var self = $('#ga-uniques');
+
+        if (self.hasClass('rendered')) {
+            return;
+        }
+
+        renderChart($('#uniques-chart'), 'uniquePageviews', function () {
+            self.addClass('rendered').find('.overlay').remove();
+        });
+    });
+
+    $('#ga-tab-visitors').on('shown.bs.tab', function () {
+        console.log('Showing visitors');
+        var self = $('#ga-visitors');
+
+        if (self.hasClass('rendered')) {
+            return;
+        }
+
+        renderChart($('#visitors-chart'), 'visitors', function () {
+            self.addClass('rendered').find('.overlay').remove();
+        });
+    });
 });
 
-function renderTable(div, metric) {
+function renderTable(div, metric, cb) {
     var colors = ['green', 'aqua', 'yellow', 'red', 'blue'];
 
     $.ajax({
@@ -39,10 +67,12 @@ function renderTable(div, metric) {
 
             div.append(row);
         }
+
+        cb();
     });
 }
 
-function renderChart(chart, metric) {
+function renderChart(chart, metric, cb) {
     var data = [], totalPoints = 30, $UpdatingChartColors = chart.css('color');
 
     $.ajax({
@@ -91,10 +121,11 @@ function renderChart(chart, metric) {
         };
 
         var plot = $.plot(chart, [points], options);
+        cb();
     });
 }
 
-function renderResponsivePie(chart) {
+function renderResponsivePie(chart, cb) {
     var points = [];
     var colors = ['rgb(0,192,239)', 'rgb(243,156,18)', 'rgb(0,166,90)'];
 
@@ -109,6 +140,7 @@ function renderResponsivePie(chart) {
             points.push(point);
 
             $('#responsive-' + i).text(data[i].percentage);
+            $('#responsive-' + i).parents('.badge').css('background', colors[j - 1]);
 
             $.plot(chart, points, {
                 series: {
@@ -118,5 +150,7 @@ function renderResponsivePie(chart) {
                 }
             });
         }
+
+        cb();
     });
 }

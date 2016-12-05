@@ -1,0 +1,64 @@
+<div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+        <li class="active"><a id="ga-tab-overview" href="#ga-overview" data-toggle="tab">Overview</a></li>
+        <li><a id="ga-tab-pageviews" href="#ga-pageviews" data-toggle="tab">Pageviews</a></li>
+        <li><a id="ga-tab-uniques" href="#ga-uniques" data-toggle="tab">Uniques</a></li>
+        <li><a id="ga-tab-visitors" href="#ga-visitors" data-toggle="tab">Visitors</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active overlay-wrapper" id="ga-overview">
+            <div class="row">
+                <div class="col-lg-7 col-xs-12">
+                    <div id="pageviews-list"></div>
+                </div>
+
+                <div class="col-lg-5 col-xs-12">
+                    <div id="visitor-breakdown" style="height: 200px;">
+                    </div>
+
+                    <div style="text-align: right">
+                        <span class="badge">Desktop (<span id="responsive-desktop"></span>%)</span><br>
+                        <span class="badge">Tablet (<span id="responsive-tablet"></span>%)</span><br>
+                        <span class="badge">Mobile (<span id="responsive-mobile"></span>%)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
+
+        <!-- /.tab-pane -->
+        <div class="tab-pane overlay-wrapper" id="ga-pageviews">
+            <div id="pageviews-chart" class="chart-large text-light-blue" style="height: 250px"></div>
+
+            <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
+        <!-- /.tab-pane -->
+        <div class="tab-pane overlay-wrapper" id="ga-uniques">
+            <div id="uniques-chart" class="chart-large text-light-blue" style="height: 250px"></div>
+
+            <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
+        <!-- /.tab-pane -->
+        <div class="tab-pane overlay-wrapper" id="ga-visitors">
+            <div id="visitors-chart" class="chart-large text-light-blue" style="height: 250px"></div>
+
+            <div class="overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
+        <!-- /.tab-pane -->
+
+    </div>
+    <!-- /.tab-content -->
+
+
+</div>
+

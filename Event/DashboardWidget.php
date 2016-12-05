@@ -3,7 +3,7 @@
 namespace Octo\GoogleAnalytics\Event;
 
 use b8\Config;
-use Octo\Admin\Template;
+use Octo\Template;
 use Octo\Event\Listener;
 use Octo\Event\Manager;
 use Octo\System\Model\Setting;
@@ -25,8 +25,8 @@ class DashboardWidget extends Listener
         $assets->addJs('GoogleAnalytics', 'analytics');
 
         if (Setting::get('analytics', 'ga_profile_id') != '') {
-            $view = Template::getAdminTemplate('Dashboard/widget', 'GoogleAnalytics');
-            $widgets[] = ['order' => 1, 'html' => $view->render()];
+            $template = new Template('GoogleAnalytics/widget', 'admin');
+            $widgets[] = ['order' => 1, 'html' => $template->render()];
         }
     }
 }
