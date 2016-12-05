@@ -22,10 +22,9 @@ class GoogleAnalyticsInstallMigration extends AbstractMigration
 
     protected function createGaPageView()
     {
-        $table = $this->table('ga_page_view', ['id' => false, 'primary_key' => ['id']]);
+        $table = $this->table('ga_page_view');
 
         if (!$this->hasTable('ga_page_view')) {
-            $table->addColumn('id', 'integer', ['signed' => false, 'null' => false]);
             $table->create();
         }
 
@@ -61,10 +60,9 @@ class GoogleAnalyticsInstallMigration extends AbstractMigration
 
     protected function createGaSummaryView()
     {
-        $table = $this->table('ga_summary_view', ['id' => false, 'primary_key' => ['id']]);
+        $table = $this->table('ga_summary_view');
 
         if (!$this->hasTable('ga_summary_view')) {
-            $table->addColumn('id', 'integer', ['signed' => false, 'null' => false]);
             $table->create();
         }
 
@@ -95,10 +93,9 @@ class GoogleAnalyticsInstallMigration extends AbstractMigration
 
     protected function createGaTopPage()
     {
-        $table = $this->table('ga_top_page', ['id' => false, 'primary_key' => ['id']]);
+        $table = $this->table('ga_top_page');
 
         if (!$this->hasTable('ga_top_page')) {
-            $table->addColumn('id', 'integer', ['signed' => false, 'null' => false]);
             $table->create();
         }
 

@@ -6,6 +6,7 @@
 
 namespace Octo\GoogleAnalytics\Model\Base;
 
+use DateTime;
 use Octo\Model;
 use Octo\Store;
 

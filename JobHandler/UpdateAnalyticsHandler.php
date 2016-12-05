@@ -90,7 +90,7 @@ class UpdateAnalyticsHandler extends Handler
                 $record->setPageId($page->getId());
             }
 
-            $store->saveByReplace($record);
+            $store->replace($record);
         }
     }
 

@@ -19,11 +19,14 @@ class DashboardWidget extends Listener
     {
         /** @var \Octo\AssetManager $assets */
         $assets = Config::getInstance()->get('Octo.AssetManager');
+        $assets->addThirdParty('js', 'GoogleAnalytics', 'flot/jquery.flot.min.js');
+        $assets->addThirdParty('js', 'GoogleAnalytics', 'flot/jquery.flot.resize.min.js');
+        $assets->addThirdParty('js', 'GoogleAnalytics', 'flot/jquery.flot.pie.min.js');
         $assets->addJs('GoogleAnalytics', 'analytics');
 
         if (Setting::get('analytics', 'ga_profile_id') != '') {
             $view = Template::getAdminTemplate('Dashboard/widget', 'GoogleAnalytics');
-            $widgets[] = ['order' => 0, 'html' => $view->render()];
+            $widgets[] = ['order' => 1, 'html' => $view->render()];
         }
     }
 }
