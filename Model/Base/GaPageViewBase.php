@@ -7,13 +7,15 @@
 namespace Octo\GoogleAnalytics\Model\Base;
 
 use DateTime;
+use Block8\Database\Query;
 use Octo\Model;
 use Octo\Store;
+use Octo\GoogleAnalytics\Model\GaPageView;
 
 /**
  * GaPageView Base Model
  */
-class GaPageViewBase extends Model
+abstract class GaPageViewBase extends Model
 {
     protected function init()
     {
@@ -52,7 +54,7 @@ class GaPageViewBase extends Model
      * @return int
      */
 
-     public function getId()
+     public function getId() : int
      {
         $rtn = $this->data['id'];
 
@@ -64,12 +66,12 @@ class GaPageViewBase extends Model
      * @return DateTime
      */
 
-     public function getDate()
+     public function getDate() : ?DateTime
      {
         $rtn = $this->data['date'];
 
         if (!empty($rtn)) {
-            $rtn = new \DateTime($rtn);
+            $rtn = new DateTime($rtn);
         }
 
         return $rtn;
@@ -80,12 +82,12 @@ class GaPageViewBase extends Model
      * @return DateTime
      */
 
-     public function getUpdated()
+     public function getUpdated() : ?DateTime
      {
         $rtn = $this->data['updated'];
 
         if (!empty($rtn)) {
-            $rtn = new \DateTime($rtn);
+            $rtn = new DateTime($rtn);
         }
 
         return $rtn;
@@ -96,7 +98,7 @@ class GaPageViewBase extends Model
      * @return int
      */
 
-     public function getValue()
+     public function getValue() : ?int
      {
         $rtn = $this->data['value'];
 
@@ -108,7 +110,7 @@ class GaPageViewBase extends Model
      * @return string
      */
 
-     public function getMetric()
+     public function getMetric() : ?string
      {
         $rtn = $this->data['metric'];
 
@@ -119,86 +121,84 @@ class GaPageViewBase extends Model
     /**
      * Set the value of Id / id
      * @param $value int
+     * @return GaPageView
      */
-    public function setId(int $value)
+    public function setId(int $value) : GaPageView
     {
 
-        $this->validateNotNull('Id', $value);
-
-        if ($this->data['id'] === $value) {
-            return;
+        if ($this->data['id'] !== $value) {
+            $this->data['id'] = $value;
+            $this->setModified('id');
         }
 
-        $this->data['id'] = $value;
-        $this->setModified('id');
+        return $this;
     }
     
     /**
      * Set the value of Date / date
      * @param $value DateTime
+     * @return GaPageView
      */
-    public function setDate($value)
+    public function setDate($value) : GaPageView
     {
         $this->validateDate('Date', $value);
 
-
-        if ($this->data['date'] === $value) {
-            return;
+        if ($this->data['date'] !== $value) {
+            $this->data['date'] = $value;
+            $this->setModified('date');
         }
 
-        $this->data['date'] = $value;
-        $this->setModified('date');
+        return $this;
     }
     
     /**
      * Set the value of Updated / updated
      * @param $value DateTime
+     * @return GaPageView
      */
-    public function setUpdated($value)
+    public function setUpdated($value) : GaPageView
     {
         $this->validateDate('Updated', $value);
 
-
-        if ($this->data['updated'] === $value) {
-            return;
+        if ($this->data['updated'] !== $value) {
+            $this->data['updated'] = $value;
+            $this->setModified('updated');
         }
 
-        $this->data['updated'] = $value;
-        $this->setModified('updated');
+        return $this;
     }
     
     /**
      * Set the value of Value / value
      * @param $value int
+     * @return GaPageView
      */
-    public function setValue($value)
+    public function setValue(?int $value) : GaPageView
     {
 
-
-
-        if ($this->data['value'] === $value) {
-            return;
+        if ($this->data['value'] !== $value) {
+            $this->data['value'] = $value;
+            $this->setModified('value');
         }
 
-        $this->data['value'] = $value;
-        $this->setModified('value');
+        return $this;
     }
     
     /**
      * Set the value of Metric / metric
      * @param $value string
+     * @return GaPageView
      */
-    public function setMetric($value)
+    public function setMetric(?string $value) : GaPageView
     {
 
-
-
-        if ($this->data['metric'] === $value) {
-            return;
+        if ($this->data['metric'] !== $value) {
+            $this->data['metric'] = $value;
+            $this->setModified('metric');
         }
 
-        $this->data['metric'] = $value;
-        $this->setModified('metric');
+        return $this;
     }
     
-    }
+    
+}

@@ -7,13 +7,15 @@
 namespace Octo\GoogleAnalytics\Model\Base;
 
 use DateTime;
+use Block8\Database\Query;
 use Octo\Model;
 use Octo\Store;
+use Octo\GoogleAnalytics\Model\GaTopPage;
 
 /**
  * GaTopPage Base Model
  */
-class GaTopPageBase extends Model
+abstract class GaTopPageBase extends Model
 {
     protected function init()
     {
@@ -59,7 +61,7 @@ class GaTopPageBase extends Model
      * @return int
      */
 
-     public function getId()
+     public function getId() : int
      {
         $rtn = $this->data['id'];
 
@@ -71,12 +73,12 @@ class GaTopPageBase extends Model
      * @return DateTime
      */
 
-     public function getUpdated()
+     public function getUpdated() : ?DateTime
      {
         $rtn = $this->data['updated'];
 
         if (!empty($rtn)) {
-            $rtn = new \DateTime($rtn);
+            $rtn = new DateTime($rtn);
         }
 
         return $rtn;
@@ -87,7 +89,7 @@ class GaTopPageBase extends Model
      * @return int
      */
 
-     public function getPageviews()
+     public function getPageviews() : ?int
      {
         $rtn = $this->data['pageviews'];
 
@@ -99,7 +101,7 @@ class GaTopPageBase extends Model
      * @return int
      */
 
-     public function getUniquePageviews()
+     public function getUniquePageviews() : ?int
      {
         $rtn = $this->data['unique_pageviews'];
 
@@ -111,7 +113,7 @@ class GaTopPageBase extends Model
      * @return string
      */
 
-     public function getUri()
+     public function getUri() : ?string
      {
         $rtn = $this->data['uri'];
 
@@ -123,7 +125,7 @@ class GaTopPageBase extends Model
      * @return string
      */
 
-     public function getPageId()
+     public function getPageId() : ?string
      {
         $rtn = $this->data['page_id'];
 
@@ -134,95 +136,91 @@ class GaTopPageBase extends Model
     /**
      * Set the value of Id / id
      * @param $value int
+     * @return GaTopPage
      */
-    public function setId(int $value)
+    public function setId(int $value) : GaTopPage
     {
 
-        $this->validateNotNull('Id', $value);
-
-        if ($this->data['id'] === $value) {
-            return;
+        if ($this->data['id'] !== $value) {
+            $this->data['id'] = $value;
+            $this->setModified('id');
         }
 
-        $this->data['id'] = $value;
-        $this->setModified('id');
+        return $this;
     }
     
     /**
      * Set the value of Updated / updated
      * @param $value DateTime
+     * @return GaTopPage
      */
-    public function setUpdated($value)
+    public function setUpdated($value) : GaTopPage
     {
         $this->validateDate('Updated', $value);
 
-
-        if ($this->data['updated'] === $value) {
-            return;
+        if ($this->data['updated'] !== $value) {
+            $this->data['updated'] = $value;
+            $this->setModified('updated');
         }
 
-        $this->data['updated'] = $value;
-        $this->setModified('updated');
+        return $this;
     }
     
     /**
      * Set the value of Pageviews / pageviews
      * @param $value int
+     * @return GaTopPage
      */
-    public function setPageviews($value)
+    public function setPageviews(?int $value) : GaTopPage
     {
 
-
-
-        if ($this->data['pageviews'] === $value) {
-            return;
+        if ($this->data['pageviews'] !== $value) {
+            $this->data['pageviews'] = $value;
+            $this->setModified('pageviews');
         }
 
-        $this->data['pageviews'] = $value;
-        $this->setModified('pageviews');
+        return $this;
     }
     
     /**
      * Set the value of UniquePageviews / unique_pageviews
      * @param $value int
+     * @return GaTopPage
      */
-    public function setUniquePageviews($value)
+    public function setUniquePageviews(?int $value) : GaTopPage
     {
 
-
-
-        if ($this->data['unique_pageviews'] === $value) {
-            return;
+        if ($this->data['unique_pageviews'] !== $value) {
+            $this->data['unique_pageviews'] = $value;
+            $this->setModified('unique_pageviews');
         }
 
-        $this->data['unique_pageviews'] = $value;
-        $this->setModified('unique_pageviews');
+        return $this;
     }
     
     /**
      * Set the value of Uri / uri
      * @param $value string
+     * @return GaTopPage
      */
-    public function setUri($value)
+    public function setUri(?string $value) : GaTopPage
     {
 
-
-
-        if ($this->data['uri'] === $value) {
-            return;
+        if ($this->data['uri'] !== $value) {
+            $this->data['uri'] = $value;
+            $this->setModified('uri');
         }
 
-        $this->data['uri'] = $value;
-        $this->setModified('uri');
+        return $this;
     }
     
     /**
      * Set the value of PageId / page_id
      * @param $value string
+     * @return GaTopPage
      */
-    public function setPageId($value)
+    public function setPageId(?string $value) : GaTopPage
     {
-
 
         // As this column is a foreign key, empty values should be considered null.
         if (empty($value)) {
@@ -230,13 +228,12 @@ class GaTopPageBase extends Model
         }
 
 
-
-        if ($this->data['page_id'] === $value) {
-            return;
+        if ($this->data['page_id'] !== $value) {
+            $this->data['page_id'] = $value;
+            $this->setModified('page_id');
         }
 
-        $this->data['page_id'] = $value;
-        $this->setModified('page_id');
+        return $this;
     }
     
     
@@ -293,4 +290,5 @@ class GaTopPageBase extends Model
     {
         return $this->setPageId($value->getId());
     }
+
 }
