@@ -11,44 +11,80 @@ use Block8\Database\Query;
 use Octo\Model;
 use Octo\Store;
 use Octo\GoogleAnalytics\Model\GaPageView;
+use Octo\GoogleAnalytics\Store\GaPageViewStore;
 
 /**
  * GaPageView Base Model
  */
 abstract class GaPageViewBase extends Model
 {
-    protected function init()
-    {
-        $this->table = 'ga_page_view';
-        $this->model = 'GaPageView';
+    protected $table = 'ga_page_view';
+    protected $model = 'GaPageView';
+    protected $data = [
+        'id' => null,
+        'date' => null,
+        'updated' => null,
+        'value' => null,
+        'metric' => null,
+    ];
 
-        // Columns:
-        
-        $this->data['id'] = null;
-        $this->getters['id'] = 'getId';
-        $this->setters['id'] = 'setId';
-        
-        $this->data['date'] = null;
-        $this->getters['date'] = 'getDate';
-        $this->setters['date'] = 'setDate';
-        
-        $this->data['updated'] = null;
-        $this->getters['updated'] = 'getUpdated';
-        $this->setters['updated'] = 'setUpdated';
-        
-        $this->data['value'] = null;
-        $this->getters['value'] = 'getValue';
-        $this->setters['value'] = 'setValue';
-        
-        $this->data['metric'] = null;
-        $this->getters['metric'] = 'getMetric';
-        $this->setters['metric'] = 'setMetric';
-        
-        // Foreign keys:
-        
+    protected $getters = [
+        'id' => 'getId',
+        'date' => 'getDate',
+        'updated' => 'getUpdated',
+        'value' => 'getValue',
+        'metric' => 'getMetric',
+    ];
+
+    protected $setters = [
+        'id' => 'setId',
+        'date' => 'setDate',
+        'updated' => 'setUpdated',
+        'value' => 'setValue',
+        'metric' => 'setMetric',
+    ];
+
+    /**
+     * Return the database store for this model.
+     * @return GaPageViewStore
+     */
+    public static function Store() : GaPageViewStore
+    {
+        return GaPageViewStore::load();
     }
 
-    
+    /**
+     * Get GaPageView by primary key: id
+     * @param int $id
+     * @return GaPageView|null
+     */
+    public static function get(int $id) : ?GaPageView
+    {
+        return self::Store()->getById($id);
+    }
+
+    /**
+     * @throws \Exception
+     * @return GaPageView
+     */
+    public function save() : GaPageView
+    {
+        $rtn = self::Store()->save($this);
+
+        if (empty($rtn)) {
+            throw new \Exception('Failed to save GaPageView');
+        }
+
+        if (!($rtn instanceof GaPageView)) {
+            throw new \Exception('Unexpected ' . get_class($rtn) . ' received from save.');
+        }
+
+        $this->data = $rtn->toArray();
+
+        return $this;
+    }
+
+
     /**
      * Get the value of Id / id
      * @return int

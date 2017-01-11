@@ -28,15 +28,15 @@ class UpdateAnalyticsHandler extends Handler
 
     public function run()
     {
-        $this->tableId = Setting::get('analytics', 'ga_profile_id');
+        $this->tableId = Setting::getSetting('analytics', 'ga_profile_id');
         $this->today = (new DateTime())->format('Y-m-d');
         $this->monthAgo = (new DateTime())->modify('-1 month')->format('Y-m-d');
 
         $this->client = new \Google_Client();
-        $this->client->setClientId(Setting::get('google-identity', 'client_id'));
-        $this->client->setClientSecret(Setting::get('google-identity', 'client_secret'));
+        $this->client->setClientId(Setting::getSetting('google-identity', 'client_id'));
+        $this->client->setClientSecret(Setting::getSetting('google-identity', 'client_secret'));
         $this->client->setRedirectUri('postmessage');
-        $this->client->setAccessToken(Setting::get('google-identity', 'access_token'));
+        $this->client->setAccessToken(Setting::getSetting('google-identity', 'access_token'));
         $this->service = new \Google_Service_Analytics($this->client);
 
         $this->getDateViews();

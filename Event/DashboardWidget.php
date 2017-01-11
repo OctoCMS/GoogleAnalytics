@@ -24,7 +24,7 @@ class DashboardWidget extends Listener
         $assets->addThirdParty('js', 'GoogleAnalytics', 'flot/jquery.flot.pie.min.js');
         $assets->addJs('GoogleAnalytics', 'analytics');
 
-        if (Setting::get('analytics', 'ga_profile_id') != '') {
+        if (Setting::getSetting('analytics', 'ga_profile_id') != '') {
             $template = new Template('GoogleAnalytics/widget', 'admin');
             $widgets[] = ['order' => 1, 'html' => $template->render()];
         }

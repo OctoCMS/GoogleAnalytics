@@ -11,51 +11,85 @@ use Block8\Database\Query;
 use Octo\Model;
 use Octo\Store;
 use Octo\GoogleAnalytics\Model\GaTopPage;
+use Octo\GoogleAnalytics\Store\GaTopPageStore;
 
 /**
  * GaTopPage Base Model
  */
 abstract class GaTopPageBase extends Model
 {
-    protected function init()
-    {
-        $this->table = 'ga_top_page';
-        $this->model = 'GaTopPage';
+    protected $table = 'ga_top_page';
+    protected $model = 'GaTopPage';
+    protected $data = [
+        'id' => null,
+        'updated' => null,
+        'pageviews' => null,
+        'unique_pageviews' => null,
+        'uri' => null,
+        'page_id' => null,
+    ];
 
-        // Columns:
-        
-        $this->data['id'] = null;
-        $this->getters['id'] = 'getId';
-        $this->setters['id'] = 'setId';
-        
-        $this->data['updated'] = null;
-        $this->getters['updated'] = 'getUpdated';
-        $this->setters['updated'] = 'setUpdated';
-        
-        $this->data['pageviews'] = null;
-        $this->getters['pageviews'] = 'getPageviews';
-        $this->setters['pageviews'] = 'setPageviews';
-        
-        $this->data['unique_pageviews'] = null;
-        $this->getters['unique_pageviews'] = 'getUniquePageviews';
-        $this->setters['unique_pageviews'] = 'setUniquePageviews';
-        
-        $this->data['uri'] = null;
-        $this->getters['uri'] = 'getUri';
-        $this->setters['uri'] = 'setUri';
-        
-        $this->data['page_id'] = null;
-        $this->getters['page_id'] = 'getPageId';
-        $this->setters['page_id'] = 'setPageId';
-        
-        // Foreign keys:
-        
-        $this->getters['Page'] = 'getPage';
-        $this->setters['Page'] = 'setPage';
-        
+    protected $getters = [
+        'id' => 'getId',
+        'updated' => 'getUpdated',
+        'pageviews' => 'getPageviews',
+        'unique_pageviews' => 'getUniquePageviews',
+        'uri' => 'getUri',
+        'page_id' => 'getPageId',
+        'Page' => 'getPage',
+    ];
+
+    protected $setters = [
+        'id' => 'setId',
+        'updated' => 'setUpdated',
+        'pageviews' => 'setPageviews',
+        'unique_pageviews' => 'setUniquePageviews',
+        'uri' => 'setUri',
+        'page_id' => 'setPageId',
+        'Page' => 'setPage',
+    ];
+
+    /**
+     * Return the database store for this model.
+     * @return GaTopPageStore
+     */
+    public static function Store() : GaTopPageStore
+    {
+        return GaTopPageStore::load();
     }
 
-    
+    /**
+     * Get GaTopPage by primary key: id
+     * @param int $id
+     * @return GaTopPage|null
+     */
+    public static function get(int $id) : ?GaTopPage
+    {
+        return self::Store()->getById($id);
+    }
+
+    /**
+     * @throws \Exception
+     * @return GaTopPage
+     */
+    public function save() : GaTopPage
+    {
+        $rtn = self::Store()->save($this);
+
+        if (empty($rtn)) {
+            throw new \Exception('Failed to save GaTopPage');
+        }
+
+        if (!($rtn instanceof GaTopPage)) {
+            throw new \Exception('Unexpected ' . get_class($rtn) . ' received from save.');
+        }
+
+        $this->data = $rtn->toArray();
+
+        return $this;
+    }
+
+
     /**
      * Get the value of Id / id
      * @return int

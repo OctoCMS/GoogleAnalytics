@@ -11,40 +11,77 @@ use Block8\Database\Query;
 use Octo\Model;
 use Octo\Store;
 use Octo\GoogleAnalytics\Model\GaSummaryView;
+use Octo\GoogleAnalytics\Store\GaSummaryViewStore;
 
 /**
  * GaSummaryView Base Model
  */
 abstract class GaSummaryViewBase extends Model
 {
-    protected function init()
-    {
-        $this->table = 'ga_summary_view';
-        $this->model = 'GaSummaryView';
+    protected $table = 'ga_summary_view';
+    protected $model = 'GaSummaryView';
+    protected $data = [
+        'id' => null,
+        'updated' => null,
+        'value' => null,
+        'metric' => null,
+    ];
 
-        // Columns:
-        
-        $this->data['id'] = null;
-        $this->getters['id'] = 'getId';
-        $this->setters['id'] = 'setId';
-        
-        $this->data['updated'] = null;
-        $this->getters['updated'] = 'getUpdated';
-        $this->setters['updated'] = 'setUpdated';
-        
-        $this->data['value'] = null;
-        $this->getters['value'] = 'getValue';
-        $this->setters['value'] = 'setValue';
-        
-        $this->data['metric'] = null;
-        $this->getters['metric'] = 'getMetric';
-        $this->setters['metric'] = 'setMetric';
-        
-        // Foreign keys:
-        
+    protected $getters = [
+        'id' => 'getId',
+        'updated' => 'getUpdated',
+        'value' => 'getValue',
+        'metric' => 'getMetric',
+    ];
+
+    protected $setters = [
+        'id' => 'setId',
+        'updated' => 'setUpdated',
+        'value' => 'setValue',
+        'metric' => 'setMetric',
+    ];
+
+    /**
+     * Return the database store for this model.
+     * @return GaSummaryViewStore
+     */
+    public static function Store() : GaSummaryViewStore
+    {
+        return GaSummaryViewStore::load();
     }
 
-    
+    /**
+     * Get GaSummaryView by primary key: id
+     * @param int $id
+     * @return GaSummaryView|null
+     */
+    public static function get(int $id) : ?GaSummaryView
+    {
+        return self::Store()->getById($id);
+    }
+
+    /**
+     * @throws \Exception
+     * @return GaSummaryView
+     */
+    public function save() : GaSummaryView
+    {
+        $rtn = self::Store()->save($this);
+
+        if (empty($rtn)) {
+            throw new \Exception('Failed to save GaSummaryView');
+        }
+
+        if (!($rtn instanceof GaSummaryView)) {
+            throw new \Exception('Unexpected ' . get_class($rtn) . ' received from save.');
+        }
+
+        $this->data = $rtn->toArray();
+
+        return $this;
+    }
+
+
     /**
      * Get the value of Id / id
      * @return int
