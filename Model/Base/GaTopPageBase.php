@@ -10,8 +10,10 @@ use DateTime;
 use Block8\Database\Query;
 use Octo\Model;
 use Octo\Store;
-use Octo\GoogleAnalytics\Model\GaTopPage;
+
 use Octo\GoogleAnalytics\Store\GaTopPageStore;
+use Octo\GoogleAnalytics\Model\GaTopPage;
+use Octo\Pages\Model\Page;
 
 /**
  * GaTopPage Base Model
@@ -94,7 +96,6 @@ abstract class GaTopPageBase extends Model
      * Get the value of Id / id
      * @return int
      */
-
      public function getId() : int
      {
         $rtn = $this->data['id'];
@@ -106,7 +107,6 @@ abstract class GaTopPageBase extends Model
      * Get the value of Updated / updated
      * @return DateTime
      */
-
      public function getUpdated() : ?DateTime
      {
         $rtn = $this->data['updated'];
@@ -122,7 +122,6 @@ abstract class GaTopPageBase extends Model
      * Get the value of Pageviews / pageviews
      * @return int
      */
-
      public function getPageviews() : ?int
      {
         $rtn = $this->data['pageviews'];
@@ -134,7 +133,6 @@ abstract class GaTopPageBase extends Model
      * Get the value of UniquePageviews / unique_pageviews
      * @return int
      */
-
      public function getUniquePageviews() : ?int
      {
         $rtn = $this->data['unique_pageviews'];
@@ -146,7 +144,6 @@ abstract class GaTopPageBase extends Model
      * Get the value of Uri / uri
      * @return string
      */
-
      public function getUri() : ?string
      {
         $rtn = $this->data['uri'];
@@ -158,7 +155,6 @@ abstract class GaTopPageBase extends Model
      * Get the value of PageId / page_id
      * @return string
      */
-
      public function getPageId() : ?string
      {
         $rtn = $this->data['page_id'];
@@ -270,15 +266,15 @@ abstract class GaTopPageBase extends Model
         return $this;
     }
     
-    
+
     /**
      * Get the Page model for this  by Id.
      *
      * @uses \Octo\Pages\Store\PageStore::getById()
-     * @uses \Octo\Pages\Model\Page
-     * @return \Octo\Pages\Model\Page
+     * @uses Page
+     * @return Page|null
      */
-    public function getPage()
+    public function getPage() : ?Page
     {
         $key = $this->getPageId();
 
@@ -286,15 +282,16 @@ abstract class GaTopPageBase extends Model
            return null;
         }
 
-        return Store::get('Page')->getById($key);
+        return Page::Store()->getById($key);
     }
 
     /**
      * Set Page - Accepts an ID, an array representing a Page or a Page model.
      * @throws \Exception
      * @param $value mixed
+     * @return GaTopPage
      */
-    public function setPage($value)
+    public function setPage($value) : GaTopPage
     {
         // Is this a scalar value representing the ID of this foreign key?
         if (is_scalar($value)) {
@@ -302,7 +299,7 @@ abstract class GaTopPageBase extends Model
         }
 
         // Is this an instance of Page?
-        if (is_object($value) && $value instanceof \Octo\Pages\Model\Page) {
+        if (is_object($value) && $value instanceof Page) {
             return $this->setPageObject($value);
         }
 
@@ -318,11 +315,11 @@ abstract class GaTopPageBase extends Model
     /**
      * Set Page - Accepts a Page model.
      *
-     * @param $value \Octo\Pages\Model\Page
+     * @param $value Page
+     * @return GaTopPage
      */
-    public function setPageObject(\Octo\Pages\Model\Page $value)
+    public function setPageObject(Page $value) : GaTopPage
     {
         return $this->setPageId($value->getId());
     }
-
 }

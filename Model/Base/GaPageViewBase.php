@@ -10,8 +10,9 @@ use DateTime;
 use Block8\Database\Query;
 use Octo\Model;
 use Octo\Store;
-use Octo\GoogleAnalytics\Model\GaPageView;
+
 use Octo\GoogleAnalytics\Store\GaPageViewStore;
+use Octo\GoogleAnalytics\Model\GaPageView;
 
 /**
  * GaPageView Base Model
@@ -89,7 +90,6 @@ abstract class GaPageViewBase extends Model
      * Get the value of Id / id
      * @return int
      */
-
      public function getId() : int
      {
         $rtn = $this->data['id'];
@@ -101,7 +101,6 @@ abstract class GaPageViewBase extends Model
      * Get the value of Date / date
      * @return DateTime
      */
-
      public function getDate() : ?DateTime
      {
         $rtn = $this->data['date'];
@@ -117,7 +116,6 @@ abstract class GaPageViewBase extends Model
      * Get the value of Updated / updated
      * @return DateTime
      */
-
      public function getUpdated() : ?DateTime
      {
         $rtn = $this->data['updated'];
@@ -133,7 +131,6 @@ abstract class GaPageViewBase extends Model
      * Get the value of Value / value
      * @return int
      */
-
      public function getValue() : ?int
      {
         $rtn = $this->data['value'];
@@ -145,7 +142,6 @@ abstract class GaPageViewBase extends Model
      * Get the value of Metric / metric
      * @return string
      */
-
      public function getMetric() : ?string
      {
         $rtn = $this->data['metric'];
@@ -235,6 +231,5 @@ abstract class GaPageViewBase extends Model
 
         return $this;
     }
-    
     
 }

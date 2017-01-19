@@ -10,8 +10,9 @@ use DateTime;
 use Block8\Database\Query;
 use Octo\Model;
 use Octo\Store;
-use Octo\GoogleAnalytics\Model\GaSummaryView;
+
 use Octo\GoogleAnalytics\Store\GaSummaryViewStore;
+use Octo\GoogleAnalytics\Model\GaSummaryView;
 
 /**
  * GaSummaryView Base Model
@@ -86,7 +87,6 @@ abstract class GaSummaryViewBase extends Model
      * Get the value of Id / id
      * @return int
      */
-
      public function getId() : int
      {
         $rtn = $this->data['id'];
@@ -98,7 +98,6 @@ abstract class GaSummaryViewBase extends Model
      * Get the value of Updated / updated
      * @return DateTime
      */
-
      public function getUpdated() : ?DateTime
      {
         $rtn = $this->data['updated'];
@@ -114,7 +113,6 @@ abstract class GaSummaryViewBase extends Model
      * Get the value of Value / value
      * @return int
      */
-
      public function getValue() : ?int
      {
         $rtn = $this->data['value'];
@@ -126,7 +124,6 @@ abstract class GaSummaryViewBase extends Model
      * Get the value of Metric / metric
      * @return string
      */
-
      public function getMetric() : ?string
      {
         $rtn = $this->data['metric'];
@@ -199,6 +196,5 @@ abstract class GaSummaryViewBase extends Model
 
         return $this;
     }
-    
     
 }
